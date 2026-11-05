@@ -8,3 +8,7 @@
 | 4 | После теста 3 PIR=0 | NORMAL, реле выключено | Пройден |
 | 5 | Недопустимое значение | FAULT | Пройден |
 | 6 | Загрузка log.txt | Записи в SQLite | Пройден |
+
+## Проверка Python
+
+Команда `python python/monitoring_system.py` формирует строки `DATA` и `EVENT`, создаёт `db/variant11.db` и журнал `data/python_log.txt`. Проверены события `THRESHOLD` и `NORMAL`.
