@@ -1,15 +1,39 @@
 BEGIN;
 DELETE FROM readings;
 DELETE FROM events;
-
-INSERT INTO readings(n,t_s,sensor,value) VALUES
- (1,15,'s1',62.4),(1,15,'s2',22.1),(1,15,'s3',0),
- (2,30,'s1',41.0),(2,30,'s2',22.3),(2,30,'s3',1),
- (3,45,'s1',24.8),(3,45,'s2',22.4),(3,45,'s3',1),
- (4,60,'s1',20.6),(4,60,'s2',22.5),(4,60,'s3',1),
- (5,75,'s1',36.2),(5,75,'s2',22.6),(5,75,'s3',0);
-
-INSERT INTO events(n,t_s,type,message) VALUES
- (3,45,'THRESHOLD','Обнаружено движение при освещённости ниже 30 %'),
- (5,75,'NORMAL','Аварийное условие исчезло');
+DELETE FROM sqlite_sequence WHERE name IN ('readings','events');
+INSERT INTO readings(n,t_s,sensor,value) VALUES(1,3,'s1',62.4);
+INSERT INTO readings(n,t_s,sensor,value) VALUES(1,3,'s2',22.1);
+INSERT INTO readings(n,t_s,sensor,value) VALUES(1,3,'s3',0);
+INSERT INTO readings(n,t_s,sensor,value) VALUES(2,6,'s1',41);
+INSERT INTO readings(n,t_s,sensor,value) VALUES(2,6,'s2',22.3);
+INSERT INTO readings(n,t_s,sensor,value) VALUES(2,6,'s3',1);
+INSERT INTO readings(n,t_s,sensor,value) VALUES(3,9,'s1',24.8);
+INSERT INTO readings(n,t_s,sensor,value) VALUES(3,9,'s2',22.4);
+INSERT INTO readings(n,t_s,sensor,value) VALUES(3,9,'s3',1);
+INSERT INTO events(n,t_s,type,message) VALUES(3,9,'THRESHOLD',NULL);
+INSERT INTO readings(n,t_s,sensor,value) VALUES(4,12,'s1',20.6);
+INSERT INTO readings(n,t_s,sensor,value) VALUES(4,12,'s2',22.5);
+INSERT INTO readings(n,t_s,sensor,value) VALUES(4,12,'s3',1);
+INSERT INTO readings(n,t_s,sensor,value) VALUES(5,15,'s1',36.2);
+INSERT INTO readings(n,t_s,sensor,value) VALUES(5,15,'s2',22.6);
+INSERT INTO readings(n,t_s,sensor,value) VALUES(5,15,'s3',0);
+INSERT INTO events(n,t_s,type,message) VALUES(5,15,'NORMAL',NULL);
+INSERT INTO readings(n,t_s,sensor,value) VALUES(6,18,'s1',58.9);
+INSERT INTO readings(n,t_s,sensor,value) VALUES(6,18,'s2',22.6);
+INSERT INTO readings(n,t_s,sensor,value) VALUES(6,18,'s3',0);
+INSERT INTO readings(n,t_s,sensor,value) VALUES(7,21,'s1',27.3);
+INSERT INTO readings(n,t_s,sensor,value) VALUES(7,21,'s2',22.8);
+INSERT INTO readings(n,t_s,sensor,value) VALUES(7,21,'s3',1);
+INSERT INTO events(n,t_s,type,message) VALUES(7,21,'THRESHOLD',NULL);
+INSERT INTO readings(n,t_s,sensor,value) VALUES(8,24,'s1',44.1);
+INSERT INTO readings(n,t_s,sensor,value) VALUES(8,24,'s2',22.8);
+INSERT INTO readings(n,t_s,sensor,value) VALUES(8,24,'s3',1);
+INSERT INTO events(n,t_s,type,message) VALUES(8,24,'NORMAL',NULL);
+INSERT INTO readings(n,t_s,sensor,value) VALUES(9,27,'s1',70.2);
+INSERT INTO readings(n,t_s,sensor,value) VALUES(9,27,'s2',22.9);
+INSERT INTO readings(n,t_s,sensor,value) VALUES(9,27,'s3',0);
+INSERT INTO readings(n,t_s,sensor,value) VALUES(10,30,'s1',66.5);
+INSERT INTO readings(n,t_s,sensor,value) VALUES(10,30,'s2',23);
+INSERT INTO readings(n,t_s,sensor,value) VALUES(10,30,'s3',0);
 COMMIT;
