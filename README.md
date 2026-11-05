@@ -21,10 +21,6 @@ db/              схема, тестовые данные и запросы SQL
 nodered/         импортируемый flow Node-RED
 data/            журналы DATA/EVENT
 docs/            описание проекта и таблица подключений
-docs/easyeda_reference.svg наглядная схема для сборки в EasyEDA
-docs/easyeda_variant11.svg принципиальная схема варианта 11
-docs/bom.csv спецификация компонентов
-docs/easyeda_netlist.txt список соединений для переноса в EasyEDA
 ```
 
 ## Запуск
