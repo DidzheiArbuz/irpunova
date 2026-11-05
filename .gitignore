@@ -1,4 +1,3 @@
-db/*.db
 db/*_runtime.sql
 data/python_log.txt
 *.tmp
