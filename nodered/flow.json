@@ -1,8 +1,163 @@
 [
-  {"id":"tab11","type":"tab","label":"Вариант 11 — загрузка SQLite","disabled":false,"info":"Импортировать flow и указать путь к data/log.txt"},
-  {"id":"inject11","type":"inject","z":"tab11","name":"Загрузить журнал","props":[{"p":"payload"}],"repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"","payload":"","payloadType":"date","x":130,"y":100,"wires":[["filein11"]]},
-  {"id":"filein11","type":"file in","z":"tab11","name":"Прочитать log.txt","filename":"data/log.txt","format":"utf8","chunk":false,"sendError":true,"encoding":"none","allProps":false,"x":330,"y":100,"wires":[["parse11"]]},
-  {"id":"parse11","type":"function","z":"tab11","name":"DATA/EVENT → SQL","func":"const sql = ['BEGIN;', 'DELETE FROM readings;', 'DELETE FROM events;'];\nconst text = String(msg.payload || '').replace(/^\\uFEFF/, '');\nfor (const raw of text.split(/\\r?\\n/)) {\n  const line = raw.trim();\n  if (!line) continue;\n  const parts = line.split(' ');\n  const kind = parts.shift();\n  const f = {};\n  for (const part of parts) { const i = part.indexOf('='); if (i > 0) f[part.slice(0, i)] = part.slice(i + 1); }\n  const n = Number.parseInt(f.n);\n  if (!Number.isInteger(n)) continue;\n  const t = n * 15;\n  if (kind === 'DATA') {\n    for (const sensor of ['s1','s2','s3']) { const v = Number(f[sensor]); if (Number.isFinite(v)) sql.push(`INSERT INTO readings(n,t_s,sensor,value) VALUES(${n},${t},'${sensor}',${v});`); }\n  } else if (kind === 'EVENT' && ['THRESHOLD','NORMAL','FAULT'].includes(f.type)) {\n    sql.push(`INSERT INTO events(n,t_s,type,message) VALUES(${n},${t},'${f.type}','Serial event');`);\n  }\n}\nsql.push('COMMIT;');\nmsg.payload = sql.join('\\n') + '\\n';\nreturn msg;","outputs":1,"x":560,"y":100,"wires":[["fileout11"]]},
-  {"id":"fileout11","type":"file","z":"tab11","name":"Сохранить load.sql","filename":"db/load_runtime.sql","appendNewline":false,"createDir":true,"overwriteFile":"true","encoding":"none","x":790,"y":100,"wires":[["debug11"]]},
-  {"id":"debug11","type":"debug","z":"tab11","name":"SQL готов","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"payload","targetType":"msg","statusVal":"","statusType":"auto","x":1000,"y":100,"wires":[]}
+  {
+    "id": "tab11",
+    "type": "tab",
+    "label": "Вариант 11. Умная лестница",
+    "disabled": false,
+    "info": ""
+  },
+  {
+    "id": "watch11",
+    "type": "watch",
+    "z": "tab11",
+    "name": "Файл data/log.txt",
+    "files": "data/log.txt",
+    "recursive": false,
+    "x": 150,
+    "y": 60,
+    "wires": [
+      [
+        "filein11"
+      ]
+    ]
+  },
+  {
+    "id": "inject11",
+    "type": "inject",
+    "z": "tab11",
+    "name": "Загрузить вручную",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "",
+    "payloadType": "date",
+    "x": 150,
+    "y": 120,
+    "wires": [
+      [
+        "filein11"
+      ]
+    ]
+  },
+  {
+    "id": "filein11",
+    "type": "file in",
+    "z": "tab11",
+    "name": "Прочитать data/log.txt",
+    "filename": "data/log.txt",
+    "filenameType": "str",
+    "format": "utf8",
+    "chunk": false,
+    "sendError": false,
+    "encoding": "none",
+    "allProps": false,
+    "x": 380,
+    "y": 90,
+    "wires": [
+      [
+        "parse11"
+      ]
+    ]
+  },
+  {
+    "id": "parse11",
+    "type": "function",
+    "z": "tab11",
+    "name": "Разбор лога и подготовка SQL",
+    "func": "const T = 3;\nconst RANGES = { s1: [0, 100], s2: [-20, 80], s3: [0, 1] };\nconst text = String(msg.payload).replace(/^﻿/, '');\nconst sql = [];\ntext.split(/\\r?\\n/).forEach(raw => {\n  const line = raw.trim();\n  if (!line) return;\n  const parts = line.split(' ');\n  const kind = parts[0];            // DATA или EVENT\n  const f = {};\n  parts.slice(1).forEach(p => {\n    const kv = p.split('=');\n    f[kv[0]] = kv[1];\n  });\n  const n = parseInt(f.n);\n  if (isNaN(n)) return;\n  const t = n * T;\n  if (kind === 'DATA') {\n    ['s1', 's2', 's3'].forEach(s => {\n      const v = parseFloat(f[s]);\n      sql.push(`INSERT INTO readings(n,t_s,sensor,value) VALUES(${n},${t},'${s}',${v});`);\n      if (isNaN(v) || v < RANGES[s][0] || v > RANGES[s][1]) {\n        sql.push(`INSERT INTO events(n,t_s,type,message) VALUES(${n},${t},'FAULT','датчик ${s} вне диапазона');`);\n      }\n    });\n  } else if (kind === 'EVENT') {\n    sql.push(`INSERT INTO events(n,t_s,type,message) VALUES(${n},${t},'${f.type}',NULL);`);\n  }\n});\nconst head = 'BEGIN;\\nDELETE FROM readings;\\nDELETE FROM events;\\n' +\n  \"DELETE FROM sqlite_sequence WHERE name IN ('readings','events');\\n\";\nreturn [null, { payload: head + sql.join('\\n') + '\\nCOMMIT;\\n' }];",
+    "outputs": 2,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 640,
+    "y": 90,
+    "wires": [
+      [],
+      [
+        "fileout11"
+      ]
+    ]
+  },
+  {
+    "id": "fileout11",
+    "type": "file",
+    "z": "tab11",
+    "name": "Записать db/load.sql",
+    "filename": "db/load.sql",
+    "filenameType": "str",
+    "appendNewline": false,
+    "createDir": true,
+    "overwriteFile": "true",
+    "encoding": "none",
+    "x": 890,
+    "y": 90,
+    "wires": [
+      [
+        "exec11"
+      ]
+    ]
+  },
+  {
+    "id": "exec11",
+    "type": "exec",
+    "z": "tab11",
+    "command": "sqlite3 db/variant.db \".read db/schema.sql\" \".read db/load.sql\"",
+    "addpay": "",
+    "append": "",
+    "useSpawn": "false",
+    "timer": "",
+    "winHide": false,
+    "oldrc": false,
+    "name": "Загрузка в SQLite",
+    "x": 1130,
+    "y": 90,
+    "wires": [
+      [
+        "dbg1"
+      ],
+      [
+        "dbg2"
+      ],
+      []
+    ]
+  },
+  {
+    "id": "dbg1",
+    "type": "debug",
+    "z": "tab11",
+    "name": "Ответ sqlite3",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "x": 1370,
+    "y": 60,
+    "wires": []
+  },
+  {
+    "id": "dbg2",
+    "type": "debug",
+    "z": "tab11",
+    "name": "Ошибки sqlite3",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "x": 1380,
+    "y": 120,
+    "wires": []
+  }
 ]
