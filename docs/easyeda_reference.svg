@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#555"/></marker>
+    <style>
+      .title{font:700 28px Arial;fill:#17202a}.label{font:600 18px Arial;fill:#17202a}.small{font:15px Arial;fill:#17202a}.pin{font:700 15px Arial;fill:#fff}.box{stroke:#17202a;stroke-width:2;rx:10}.wire5{stroke:#d62828;stroke-width:4;fill:none}.wireg{stroke:#222;stroke-width:4;fill:none}.wires{stroke:#1976d2;stroke-width:4;fill:none}.wirea{stroke:#2e9d50;stroke-width:4;fill:none}.note{font:14px Arial;fill:#555}.res{stroke:#17202a;stroke-width:2;fill:#fff}
+    </style>
+  </defs>
+  <rect width="1400" height="900" fill="#fff"/>
+  <text x="700" y="42" text-anchor="middle" class="title">Схема-подсказка для EasyEDA — вариант 11</text>
+  <text x="700" y="70" text-anchor="middle" class="note">LDR + NTC + PIR → Arduino Uno → релейный модуль</text>
+
+  <!-- Arduino -->
+  <rect x="540" y="180" width="320" height="520" fill="#168aad" class="box"/>
+  <text x="700" y="235" text-anchor="middle" font-family="Arial" font-size="25" font-weight="bold" fill="white">ARDUINO UNO</text>
+  <text x="700" y="265" text-anchor="middle" class="pin">ATmega328P</text>
+  <rect x="565" y="300" width="120" height="36" fill="#075985" rx="5"/><text x="625" y="324" text-anchor="middle" class="pin">5V</text>
+  <rect x="715" y="300" width="120" height="36" fill="#333" rx="5"/><text x="775" y="324" text-anchor="middle" class="pin">GND</text>
+  <rect x="565" y="390" width="120" height="36" fill="#087f5b" rx="5"/><text x="625" y="414" text-anchor="middle" class="pin">A0</text>
+  <rect x="565" y="450" width="120" height="36" fill="#087f5b" rx="5"/><text x="625" y="474" text-anchor="middle" class="pin">A1</text>
+  <rect x="715" y="390" width="120" height="36" fill="#7c3aed" rx="5"/><text x="775" y="414" text-anchor="middle" class="pin">D2</text>
+  <rect x="715" y="450" width="120" height="36" fill="#7c3aed" rx="5"/><text x="775" y="474" text-anchor="middle" class="pin">D7</text>
+  <text x="700" y="610" text-anchor="middle" fill="white" font-family="Arial" font-size="16">Serial Monitor 9600 бод</text>
+  <text x="700" y="638" text-anchor="middle" fill="white" font-family="Arial" font-size="16">THRESHOLD при PIR=1 и LDR&lt;30%</text>
+
+  <!-- LDR divider -->
+  <rect x="80" y="145" width="270" height="55" fill="#ffe8cc" class="box"/><text x="215" y="180" text-anchor="middle" class="label">LDR — освещённость</text>
+  <circle cx="215" cy="250" r="7" fill="#d62828"/><path d="M215 200 V250 H430 V408 H565" class="wire5"/>
+  <text x="225" y="240" class="small">5V</text>
+  <path d="M215 250 V290" class="wirea"/><path d="M185 290 l20 15 l20 -30 l20 15 l20 -30 l20 15" class="res" fill="none"/>
+  <text x="265" y="310" class="small">LDR</text>
+  <circle cx="215" cy="350" r="5" fill="#2e9d50"/><path d="M215 350 H430 V408" class="wirea"/><text x="235" y="345" class="small">узел A0</text>
+  <path d="M215 350 V390" class="wirea"/><path d="M185 390 l20 15 l20 -30 l20 15 l20 -30 l20 15" class="res" fill="none"/>
+  <text x="265" y="410" class="small">R1 10 kΩ</text><path d="M215 450 V480" class="wireg"/><text x="225" y="475" class="small">GND</text>
+
+  <!-- NTC divider -->
+  <rect x="80" y="545" width="270" height="55" fill="#e7f5ff" class="box"/><text x="215" y="580" text-anchor="middle" class="label">NTC — температура</text>
+  <circle cx="215" cy="650" r="7" fill="#d62828"/><path d="M215 600 V650 H455 V468 H565" class="wire5"/>
+  <text x="225" y="640" class="small">5V</text>
+  <path d="M215 650 V690" class="wirea"/><path d="M185 690 l20 15 l20 -30 l20 15 l20 -30 l20 15" class="res" fill="none"/>
+  <text x="265" y="710" class="small">NTC</text>
+  <circle cx="215" cy="750" r="5" fill="#2e9d50"/><path d="M215 750 H455 V468" class="wirea"/><text x="235" y="745" class="small">узел A1</text>
+  <path d="M215 750 V790" class="wirea"/><path d="M185 790 l20 15 l20 -30 l20 15 l20 -30 l20 15" class="res" fill="none"/>
+  <text x="265" y="810" class="small">R2 10 kΩ</text><path d="M215 850 V870" class="wireg"/><text x="225" y="868" class="small">GND</text>
+
+  <!-- PIR -->
+  <rect x="1010" y="155" width="270" height="170" fill="#f3e8ff" class="box"/>
+  <text x="1145" y="190" text-anchor="middle" class="label">PIR HC-SR501</text>
+  <text x="1035" y="235" class="small">VCC</text><path d="M1080 230 H930 V318 H835" class="wire5"/>
+  <text x="1035" y="270" class="small">OUT</text><path d="M1080 265 H920 V408 H835" class="wires"/>
+  <text x="1035" y="305" class="small">GND</text><path d="M1080 300 H950 V350" class="wireg"/>
+  <text x="1110" y="350" class="note">OUT → D2</text>
+
+  <!-- Relay -->
+  <rect x="1010" y="480" width="270" height="190" fill="#fff3bf" class="box"/>
+  <text x="1145" y="520" text-anchor="middle" class="label">Релейный модуль</text>
+  <text x="1035" y="565" class="small">VCC</text><path d="M1080 560 H900 V318 H835" class="wire5"/>
+  <text x="1035" y="605" class="small">IN</text><path d="M1080 600 H930 V468 H835" class="wires"/>
+  <text x="1035" y="645" class="small">GND</text><path d="M1080 640 H970 V710 H850" class="wireg"/>
+  <text x="1110" y="710" class="note">IN → D7</text>
+
+  <!-- legend -->
+  <rect x="910" y="755" width="390" height="105" fill="#fafafa" stroke="#aaa" rx="8"/>
+  <text x="930" y="780" class="label">Обозначения</text>
+  <line x1="930" y1="800" x2="1000" y2="800" class="wire5"/><text x="1015" y="806" class="small">5V</text>
+  <line x1="930" y1="825" x2="1000" y2="825" class="wireg"/><text x="1015" y="831" class="small">GND</text>
+  <line x1="1120" y1="800" x2="1190" y2="800" class="wirea"/><text x="1205" y="806" class="small">аналоговый</text>
+  <line x1="1120" y1="825" x2="1190" y2="825" class="wires"/><text x="1205" y="831" class="small">цифровой</text>
+</svg>
