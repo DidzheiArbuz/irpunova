@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1000" viewBox="0 0 1500 1000">
+<rect width="1500" height="1000" fill="white"/>
+<style>
+.title{font:700 28px Arial;fill:#222}.name{font:700 22px Arial;fill:#222}.text{font:16px Arial;fill:#222}.pin{font:700 15px Arial;fill:#222}.wire{stroke:#159447;stroke-width:4;fill:none}.bus{stroke:#159447;stroke-width:6;fill:none}.power{stroke:#159447;stroke-width:4;fill:none}.gnd{stroke:#159447;stroke-width:4;fill:none}.box{fill:#fff;stroke:#8b6f70;stroke-width:2}.arduino{fill:#fff;stroke:#39a96b;stroke-width:3}.pinbox{fill:#f7f7f7;stroke:#888;stroke-width:1}.tag{font:700 15px Arial;fill:#07803c}.note{font:14px Arial;fill:#555}
+</style>
+<text x="750" y="42" text-anchor="middle" class="title">Принципиальная схема — вариант 11</text>
+<text x="750" y="70" text-anchor="middle" class="note">Система контроля освещённости, температуры и движения</text>
+
+<!-- Arduino UNO in sample style -->
+<rect x="430" y="130" width="420" height="600" class="arduino" rx="8"/>
+<text x="640" y="245" text-anchor="middle" class="name">ARDUINO</text>
+<text x="640" y="275" text-anchor="middle" class="text">UNO R3</text>
+<rect x="470" y="315" width="130" height="180" class="pinbox"/>
+<text x="485" y="340" class="pin">POWER</text><text x="485" y="370" class="text">5V</text><text x="485" y="400" class="text">GND</text><text x="485" y="430" class="text">RESET</text><text x="485" y="460" class="text">VIN</text>
+<rect x="650" y="315" width="160" height="280" class="pinbox"/>
+<text x="665" y="340" class="pin">ANALOG IN</text><text x="665" y="380" class="text">A0 — LDR</text><text x="665" y="420" class="text">A1 — NTC</text><text x="665" y="460" class="text">A2</text><text x="665" y="500" class="text">A3</text><text x="665" y="540" class="text">A4</text><text x="665" y="580" class="text">A5</text>
+<rect x="650" y="620" width="160" height="75" class="pinbox"/>
+<text x="665" y="645" class="pin">DIGITAL</text><text x="665" y="672" class="text">D2 PIR   D7 RELAY   D13 LED</text>
+
+<!-- top LDR module -->
+<rect x="1010" y="120" width="330" height="150" class="box" rx="8"/>
+<text x="1175" y="155" text-anchor="middle" class="name">B1</text><text x="1175" y="185" text-anchor="middle" class="text">LDR LIGHT SENSOR</text>
+<text x="1035" y="225" class="text">1 SIG</text><text x="1035" y="250" class="text">2 VCC</text><text x="1240" y="225" class="text">3 GND</text>
+<circle cx="1010" cy="220" r="5" fill="#159447"/><circle cx="1010" cy="245" r="5" fill="#159447"/><circle cx="1340" cy="220" r="5" fill="#159447"/>
+<!-- NTC module -->
+<rect x="1010" y="350" width="330" height="150" class="box" rx="8"/>
+<text x="1175" y="385" text-anchor="middle" class="name">B2</text><text x="1175" y="415" text-anchor="middle" class="text">NTC TEMPERATURE SENSOR</text>
+<text x="1035" y="455" class="text">1 SIG</text><text x="1035" y="480" class="text">2 VCC</text><text x="1240" y="455" class="text">3 GND</text>
+<circle cx="1010" cy="450" r="5" fill="#159447"/><circle cx="1010" cy="475" r="5" fill="#159447"/><circle cx="1340" cy="450" r="5" fill="#159447"/>
+<!-- PIR module -->
+<rect x="60" y="160" width="300" height="180" class="box" rx="8"/>
+<text x="210" y="200" text-anchor="middle" class="name">U1</text><text x="210" y="230" text-anchor="middle" class="text">PIR MOTION SENSOR</text>
+<text x="90" y="275" class="text">1 SIG</text><text x="90" y="305" class="text">2 VCC</text><text x="260" y="275" class="text">3 GND</text>
+<circle cx="360" cy="270" r="5" fill="#159447"/><circle cx="360" cy="300" r="5" fill="#159447"/><circle cx="60" cy="270" r="5" fill="#159447"/>
+<!-- Relay -->
+<rect x="1010" y="650" width="330" height="190" class="box" rx="8"/>
+<text x="1175" y="690" text-anchor="middle" class="name">K1</text><text x="1175" y="720" text-anchor="middle" class="text">RELAY MODULE 5V</text>
+<text x="1035" y="770" class="text">IN</text><text x="1035" y="800" class="text">VCC</text><text x="1240" y="770" class="text">GND</text>
+<circle cx="1010" cy="765" r="5" fill="#159447"/><circle cx="1010" cy="795" r="5" fill="#159447"/><circle cx="1340" cy="765" r="5" fill="#159447"/>
+<!-- LED -->
+<rect x="60" y="620" width="300" height="140" class="box" rx="8"/>
+<text x="210" y="655" text-anchor="middle" class="name">LED1</text><text x="210" y="685" text-anchor="middle" class="text">RED LED + R1 220Ω</text><text x="90" y="730" class="text">A → D13</text><text x="260" y="730" class="text">K → GND</text>
+<circle cx="360" cy="725" r="5" fill="#159447"/><circle cx="60" cy="725" r="5" fill="#159447"/>
+
+<!-- signal wires -->
+<path d="M360 270 H400 V672 H650" class="wire"/><text x="405" y="255" class="tag">SIG → D2</text>
+<path d="M1010 220 H900 V380 H810" class="wire"/><text x="875" y="205" class="tag">SIG → A0</text>
+<path d="M1010 450 H930 V420 H810" class="wire"/><text x="875" y="435" class="tag">SIG → A1</text>
+<path d="M1010 765 H900 V672 H810" class="wire"/><text x="855" y="655" class="tag">IN → D7</text>
+<path d="M360 725 H400 V672 H650" class="wire"/><text x="415" y="715" class="tag">A → D13</text>
+
+<!-- 5V power bus -->
+<path d="M600 370 H900 V245 H1010 M900 245 V475 H1010 M900 475 V795 H1010 M900 795 V300 H360" class="power"/>
+<text x="915" y="240" class="tag">+5V</text><text x="610" y="292" class="tag">+5V</text>
+<!-- GND bus -->
+<path d="M600 400 H880 V220 H1340 M880 220 V450 H1340 M880 450 V765 H1340 M880 765 V725 H60" class="gnd"/>
+<text x="900" y="215" class="tag">GND</text><text x="70" y="710" class="tag">GND</text>
+
+<rect x="60" y="870" width="1280" height="75" fill="#f5fff7" stroke="#159447" rx="8"/>
+<text x="700" y="900" text-anchor="middle" class="text">Условие THRESHOLD: PIR = 1 и освещённость LDR &lt; 30 %</text>
+<text x="700" y="928" text-anchor="middle" class="text">LDR SIG→A0 | NTC SIG→A1 | PIR SIG→D2 | RELAY IN→D7 | LED A→D13</text>
+</svg>
