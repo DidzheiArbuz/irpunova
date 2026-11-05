@@ -1,0 +1,2 @@
+DATA n=6 s1=125.0 s2=22.7 s3=0
+EVENT n=6 type=FAULT

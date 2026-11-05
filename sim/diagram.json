@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "author": "Irpunova Polina",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-arduino-uno", "id": "uno", "top": 0, "left": 0, "attrs": {} },
+    { "type": "wokwi-photoresistor-sensor", "id": "ldr", "top": -20, "left": 300, "attrs": {} },
+    { "type": "wokwi-ntc-temperature-sensor", "id": "ntc", "top": 150, "left": 300, "attrs": {} },
+    { "type": "wokwi-pir-motion-sensor", "id": "pir", "top": 300, "left": 300, "attrs": {} },
+    { "type": "wokwi-relay-module", "id": "relay", "top": 450, "left": 300, "attrs": {} },
+    { "type": "wokwi-led", "id": "led", "top": 500, "left": 100, "attrs": { "color": "red" } }
+  ],
+  "connections": [
+    [ "uno:5V", "ldr:VCC", "red", [] ],
+    [ "uno:GND.1", "ldr:GND", "black", [] ],
+    [ "ldr:AO", "uno:A0", "green", [] ],
+    [ "uno:5V", "ntc:VCC", "red", [] ],
+    [ "uno:GND.1", "ntc:GND", "black", [] ],
+    [ "ntc:OUT", "uno:A1", "green", [] ],
+    [ "uno:5V", "pir:VCC", "red", [] ],
+    [ "uno:GND.1", "pir:GND", "black", [] ],
+    [ "pir:OUT", "uno:2", "blue", [] ],
+    [ "uno:5V", "relay:VCC", "red", [] ],
+    [ "uno:GND.1", "relay:GND", "black", [] ],
+    [ "relay:IN", "uno:7", "blue", [] ],
+    [ "uno:13", "led:A", "green", [] ],
+    [ "uno:GND.1", "led:C", "black", [] ]
+  ],
+  "dependencies": {}
+}
